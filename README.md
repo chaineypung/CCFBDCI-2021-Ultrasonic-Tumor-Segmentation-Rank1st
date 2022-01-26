@@ -9,12 +9,14 @@ Our solution includes **`data pre-processing`**, **`network training`**,  **`ens
 <img src="./picture/1.png" alt="drawing" width="90%" height="90%"/>
     <h4 align="center">Ultrasound images of hemangioma segmentation framework</h4>
 </p>
+
 ### 1.1 Data pre-processing
 To improve our performance on the leaderboard, 5-fold cross validation is used to evaluate the performance of our proposed method. In our opinion, it is necessary to **`keep the size distribution of tumor in the training and validation sets`**. We calculate the tumor area for each image and categorize the tumor size into classes: 1) less than 3200 pixels, 2) less than 7200 pixels and greater than 3200 pixels, and 3) greater than 7200 pixels. These two thresholds, 3200 pixels and 7200 pixels, are close to the tertiles. We divide images in each size grade group into 5 folds and combined different grades of single fold into new single fold. This strategy ensured that final 5 folds had similar size distribution. 
 <p align="center">
 <img src="./picture/2.png" alt="drawing" width="50%" height="50%"/>
     <h4 align="center">Tumors of different sizes</h4>
 </p>
+
 ### 1.2 Network training
 Due to the small size of the training set, for this competition, we chose a lightweight network structure: **`Linknet with efficientnet-B6 encoder`**. Following methods are performed in **`data augmentation (DA)`**: 1) horizontal flipping, 2) vertical flipping, 3) random cropping, 4) random affine transformation, 5) random scaling, 6) random translation, 7) random rotation, and 8) random shearing transformation. In addition, one of the following methods was randomly selected for **`enhanced data augmentation (EDA)`**: 1) sharpening, 2) local distortion, 3) adjustment of contrast, 4) blurring (Gaussian, mean, median), 5) addition of Gaussian noise, and 6) erasing. 
 
