@@ -4,7 +4,7 @@ This is the source code of the 1st place solution for ultrasound image angioma s
 [[Challenge leaderboard🏆](https://www.datafountain.cn/competitions/533/ranking?sch=1882)]
 
 ## 1 Pipeline of our solution
-Our solution includes **`data pre-processing`**, **`network training`**,  **`ensebmle inference`** and **`data post-processing`**.
+Our solution includes **`data pre-processing`**, **`network training`**,  **`ensemble inference`** and **`data post-processing`**.
 <p align="center">
 <img src="./picture/1.png" alt="drawing" width="90%" height="90%"/>
     <h4 align="center">Ultrasound images of hemangioma segmentation framework</h4>
@@ -20,7 +20,7 @@ To improve our performance on the leaderboard, 5-fold cross validation is used t
 ### 1.2 Network training
 Due to the small size of the training set, for this competition, we chose a lightweight network structure: **`Linknet with efficientnet-B6 encoder`**. Following methods are performed in **`data augmentation (DA)`**: 1) horizontal flipping, 2) vertical flipping, 3) random cropping, 4) random affine transformation, 5) random scaling, 6) random translation, 7) random rotation, and 8) random shearing transformation. In addition, one of the following methods was randomly selected for **`enhanced data augmentation (EDA)`**: 1) sharpening, 2) local distortion, 3) adjustment of contrast, 4) blurring (Gaussian, mean, median), 5) addition of Gaussian noise, and 6) erasing. 
 
-### 1.3 Ensebmle inference
+### 1.3 Ensemble inference
 We ensemble five models (five folds) and do **`test time augmentation (TTA)`** for each model. TTA generally improves the generalization ability of the segmentation model. In our framework, the TTA includes vertical flipping, horizontal flipping, and rotation of 180 degrees for the segmentation task.
 
 ### 1.4 Data post-processing
