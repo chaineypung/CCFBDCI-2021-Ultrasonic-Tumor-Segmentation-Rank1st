@@ -6,13 +6,13 @@ This is the source code of the 1st place solution for ultrasound image angioma s
 ## 1 Pipeline of our solution
 Our solution includes **`data pre-processing`**, **`network training`**,  **`ensabmle inference`** and **`data post-processing`**.
 <p align="center">
-<img src="./picture/1.PNG" alt="drawing" width="90%" height="90%"/>
+<img src="./picture/1.png" alt="drawing" width="90%" height="90%"/>
     <h4 align="center">Ultrasound images of hemangioma segmentation framework</h4>
 </p>
 ### 1.1 Data pre-processing
 To improve our performance on the leaderboard, 5-fold cross validation is used to evaluate the performance of our proposed method. In our opinion, it is necessary to **`keep the size distribution of tumor in the training and validation sets`**. We calculate the tumor area for each image and categorize the tumor size into classes: 1) less than 3200 pixels, 2) less than 7200 pixels and greater than 3200 pixels, and 3) greater than 7200 pixels. These two thresholds, 3200 pixels and 7200 pixels, are close to the tertiles. We divide images in each size grade group into 5 folds and combined different grades of single fold into new single fold. This strategy ensured that final 5 folds had similar size distribution. 
 <p align="center">
-<img src="./picture/2.PNG" alt="drawing" width="50%" height="50%"/>
+<img src="./picture/2.png" alt="drawing" width="50%" height="50%"/>
     <h4 align="center">Tumors of different sizes</h4>
 </p>
 ### 1.2 Network training
@@ -176,7 +176,7 @@ python postprocess.py \
 **Alternatively, if you want to observe the overlap between the predicted result and the original image, we also provide a visualization script `visualization.py`**. Modify the image path in the code and run the script directly.
 
 <p align="center">
-<img src="./picture/3.PNG" alt="drawing" width="60%" height="60%"/>
+<img src="./picture/3.png" alt="drawing" width="60%" height="60%"/>
     <h4 align="center">Visualization of tumor margins</h4>
 </p>
 
