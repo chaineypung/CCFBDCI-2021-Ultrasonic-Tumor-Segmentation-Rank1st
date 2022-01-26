@@ -178,7 +178,7 @@ python postprocess.py \
 **Alternatively, if you want to observe the overlap between the predicted result and the original image, we also provide a visualization script `visualization.py`**. Modify the image path in the code and run the script directly.
 
 <p align="center">
-<img src="./picture/3.png" alt="drawing" width="60%" height="60%"/>
+<img src="./picture/3.png" alt="drawing" width="70%" height="70%"/>
     <h4 align="center">Visualization of tumor margins</h4>
 </p>
 
