@@ -166,7 +166,7 @@ python inference.py \
 
 The results of the model inference will be saved in the `predict` folder.
 
-### 3.5 Step4 postprocess
+### 3.5 Step4 postprocessing
 Run the following code:
 ```
 python postprocess.py \
