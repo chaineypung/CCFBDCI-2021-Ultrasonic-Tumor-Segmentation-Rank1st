@@ -3,22 +3,28 @@ This is the source code of the 1st place solution for ultrasound image angioma s
 
 [[Challenge leaderboard🏆](https://www.datafountain.cn/competitions/533/ranking?sch=1882)]
 
-## Pipeline of our solution
-Our solution includes **`data pre-processing`**, **`network training`**,  **`ensabmle inference`** and **`post-processing`**.
-
-### Data pre-processing
+## 1 Pipeline of our solution
+Our solution includes **`data pre-processing`**, **`network training`**,  **`ensabmle inference`** and**`data post-processing`**.
+<p align="center">
+<img src="./picture/1.PNG" alt="drawing" width="90%" height="90%"/>
+    <h4 align="center">Ultrasound images of hemangioma segmentation framework</h4>
+</p>
+### 1.1 Data pre-processing
 To improve our performance on the leaderboard, 5-fold cross validation is used to evaluate the performance of our proposed method. In our opinion, it is necessary to **`keep the size distribution of tumor in the training and validation sets`**. We calculate the tumor area for each image and categorize the tumor size into classes: 1) less than 3200 pixels, 2) less than 7200 pixels and greater than 3200 pixels, and 3) greater than 7200 pixels. These two thresholds, 3200 pixels and 7200 pixels, are close to the tertiles. We divide images in each size grade group into 5 folds and combined different grades of single fold into new single fold. This strategy ensured that final 5 folds had similar size distribution. 
-
-### Network training
+<p align="center">
+<img src="./picture/2.PNG" alt="drawing" width="50%" height="50%"/>
+    <h4 align="center">Tumors of different sizes</h4>
+</p>
+### 1.2 Network training
 Due to the small size of the training set, for this competition, we chose a lightweight network structure: **`Linknet with efficientnet-B6 encoder`**. Following methods are performed in **`data augmentation (DA)`**: 1) horizontal flipping, 2) vertical flipping, 3) random cropping, 4) random affine transformation, 5) random scaling, 6) random translation, 7) random rotation, and 8) random shearing transformation. In addition, one of the following methods was randomly selected for **`enhanced data augmentation (EDA)`**: 1) sharpening, 2) local distortion, 3) adjustment of contrast, 4) blurring (Gaussian, mean, median), 5) addition of Gaussian noise, and 6) erasing. 
 
-### Ensabmle inference
+### 1.3 Ensabmle inference
 We ensamble five models (five folds) and do **`test time augmentation (TTA)`** for each model. TTA generally improves the generalization ability of the segmentation model. In our framework, the TTA includes vertical flipping, horizontal flipping, and rotation of 180 degrees for the segmentation task.
 
-### Post-processing
+### 1.4 Data post-processing
 We post-processe the obtained binary mask by **`removing small isolated points (RSIP)`**  and **`edge median filtering (EMF)`** . The edge part of our predicted tumor is not smooth enough, which is not quite in line with the manual annotation of the physician, so we adopt a small trick, i.e., we do a median filtering specifically for the edge part, and the experimental results show that this can improve the accuracy of tumor segmentation.
 
-## Segmentation results on 2021 CCF BDCI dataset
+## 2 Segmentation results on 2021 CCF BDCI dataset
 We test our method on 2021 CCD BDCI dataset (215 for training and 107 for testing). The segmentation results of 5-fold CV based on "Linknet with efficientnet-B6 encoder" are as following:
 
 | fold | Linknet | Unet | Att-Unet | DeeplabV3+ | Efficient-b5|Efficient-b6| Resnet-34  | DA | EDA   | TTA  |RSIP | EMF  |Dice (%) |
@@ -37,7 +43,7 @@ We test our method on 2021 CCD BDCI dataset (215 for training and 107 for testin
 | 1      |√  |   |   |   |     | √ |   |   | √ | √ | √ | √ | 89.52 |
 | E      |√  |   |   |   |     | √ |   |   | √ | √ | √ | √ | 90.32 |
 
-# How to run this code?
+## 3 How to run this code?
 Here, we split the whole process into **5 steps** so that you can easily replicate our results or perform the whole pipeline on your private custom dataset. 
 
 - step0, preparation of environment
@@ -82,7 +88,7 @@ The complete file structure is as follows:
 ```
 
 
-## Step0 preparation of environment
+### 3.1 Step0 preparation of environment
 We have tested our code in following environment：
  - [`segmentation_models_pytorch`](https://github.com/qubvel/segmentation_models.pytorch) 
  - [`ttach`](https://github.com/qubvel/ttach) == 0.0.3
@@ -97,7 +103,7 @@ For installing these, run the following code:
 pip install -r requirements.txt
 ```
 
-## Step1 preprocessing
+### 3.2 Step1 preprocessing
 
 In step1, you should run the script and `train.csv` can be generated under `train_data` fold:
 ```
@@ -106,7 +112,7 @@ python preprocess.py \
 --csv_path="./train_data/train.csv"
 ```
 
-## Step2 training
+### 3.3 Step2 training
 With the csv file `train.csv`, you can directly perform K-fold cross validation (default is 5-fold), and the script uses a fixed random seed to ensure that the K-fold cv of each experiment is repeatable. Run the following code:
 
 ```
@@ -135,7 +141,7 @@ python train.py \
 
 By specifying the parameter `k_th_fold` from 1 to `folds` and running repeatedly, you can complete the training of all K folds. After each fold training, you need to copy the `.pth` file from the `weights` path to the `best_model` folder.
 
-## Step3 inference (test)
+### 3.4 Step3 inference (test)
 
 Before running the script, make sure that you have generated five models and saved them in the `best_model` folder. Run the following code:
 
@@ -158,7 +164,7 @@ python inference.py \
 
 The results of the model inference will be saved in the `predict` folder.
 
-## Step4 postprocess
+### 3.5 Step4 postprocess
 Run the following code:
 ```
 python postprocess.py \
@@ -169,7 +175,12 @@ python postprocess.py \
 
 **Alternatively, if you want to observe the overlap between the predicted result and the original image, we also provide a visualization script `visualization.py`**. Modify the image path in the code and run the script directly.
 
-# Acknowledgement
+<p align="center">
+<img src="./picture/3.PNG" alt="drawing" width="60%" height="60%"/>
+    <h4 align="center">Visualization of tumor margins</h4>
+</p>
+
+## 4 Acknowledgement
 
 - Thanks to the organizers of the 2021 CCF BDCI challenge.
 - Thanks to the 2020 MICCCAI TNSCUI [TOP 1](https://github.com/WAMAWAMA) for making the code public.
