@@ -4,7 +4,7 @@ This is the source code of the 1st place solution for ultrasound image angioma s
 [[Challenge leaderboard🏆](https://www.datafountain.cn/competitions/533/ranking?sch=1882)]
 
 ## 1 Pipeline of our solution
-Our solution includes **`data pre-processing`**, **`network training`**,  **`ensabmle inference`** and**`data post-processing`**.
+Our solution includes **`data pre-processing`**, **`network training`**,  **`ensabmle inference`** and **`data post-processing`**.
 <p align="center">
 <img src="./picture/1.PNG" alt="drawing" width="90%" height="90%"/>
     <h4 align="center">Ultrasound images of hemangioma segmentation framework</h4>
