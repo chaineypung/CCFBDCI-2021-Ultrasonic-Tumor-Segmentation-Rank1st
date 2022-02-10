@@ -185,6 +185,6 @@ python postprocess.py \
 ## 4 Acknowledgement
 
 - Thanks to the organizers of the 2021 CCF BDCI challenge.
-- Thanks to the 2020 MICCCAI TNSCUI [TOP 1](https://github.com/WAMAWAMA) for making the code public.
+- Thanks to the 2020 MICCAI TNSCUI [TOP 1](https://github.com/WAMAWAMA) for making the code public.
 - Thanks to [qubvel](https://github.com/qubvel), the author of `smg` and `ttach`, all network and TTA used in this code come from his implement.
 
